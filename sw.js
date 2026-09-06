@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ward-reader-v1';
+const CACHE_NAME = 'ward-reader-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -24,16 +24,32 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
-  event.respondWith(
-    caches.match(event.request).then(cached => {
-      const fetchPromise = fetch(event.request).then(response => {
-        if (response && response.status === 200 && response.type === 'basic') {
+  const isHtml = event.request.headers.get('accept')?.includes('text/html') ||
+                 event.request.url.endsWith('.html') ||
+                 event.request.url.endsWith('/');
+
+  if (isHtml) {
+    event.respondWith(
+      fetch(event.request).then(response => {
+        if (response && response.status === 200) {
           const respClone = response.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, respClone));
         }
         return response;
-      }).catch(() => cached);
-      return cached || fetchPromise;
-    })
-  );
+      }).catch(() => caches.match(event.request))
+    );
+  } else {
+    event.respondWith(
+      caches.match(event.request).then(cached => {
+        const fetchPromise = fetch(event.request).then(response => {
+          if (response && response.status === 200) {
+            const respClone = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, respClone));
+          }
+          return response;
+        }).catch(() => cached);
+        return cached || fetchPromise;
+      })
+    );
+  }
 });
