@@ -24,6 +24,7 @@
     if (save === undefined) save = true;
     size = Math.max(14, Math.min(26, size));
     document.documentElement.style.setProperty('--font-base', size + 'px');
+    if (document.body) document.body.style.setProperty('--font-base', size + 'px');
     const display = document.getElementById('fontSizeDisplay');
     if (display) display.textContent = size + 'px';
     if (save) localStorage.setItem('ward_fontsize', size);

@@ -65,6 +65,11 @@ body.theme-dark {
 
 * { box-sizing: border-box; }
 
+html, body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -233,6 +238,7 @@ a:hover { text-decoration: underline; }
   max-width: 780px;
   margin: 0 auto;
   padding: 2.5rem 1.25rem 4rem 1.25rem;
+  font-size: var(--font-base);
 }
 
 h1.chapter-title {
@@ -483,7 +489,6 @@ code, pre {
 }
 
 @media (max-width: 640px) {
-  body { font-size: 17px; }
   .reader-container { padding: 1.5rem 1rem 3rem 1rem; }
   h1.chapter-title { font-size: 1.7rem; }
   .topbar-title { display: none; }

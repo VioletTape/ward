@@ -1,9 +1,9 @@
-const CACHE_NAME = 'ward-reader-v2';
+const CACHE_NAME = 'ward-reader-v3';
 const ASSETS = [
   './',
   './index.html',
-  './assets/css/reader.css',
-  './assets/js/reader.js',
+  './assets/css/reader.css?v=3',
+  './assets/js/reader.js?v=3',
   './assets/icon.svg',
   './manifest.json'
 ];
